@@ -1,5 +1,6 @@
 package DAO;
 
+import Entity.Account;
 import context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,24 @@ public class DAO {
         }
     }
 
+    public Account checkAccount(String username) {
+        String sql = "SELECT * FROM HE141261_account WHERE [user] = ? ";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5));
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
     public void signup(String username, String password) {
         String sql = "insert into HE141261_account values(?,?,0,0)";
         try {
@@ -26,7 +45,9 @@ public class DAO {
             ps.setString(1, username);
             ps.setString(2, password);
             ps.executeUpdate();
-        } catch (SQLException e) {
+        } catch (Exception e) {
         }
     }
+    
+
 }
