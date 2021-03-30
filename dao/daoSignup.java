@@ -50,5 +50,23 @@ public class DAO {
         }
     }
     
+     public Product getProductById(int id) {
+        Product p = null;
+        String sql = "SELECT * FROM HE141261_product WHERE id =" + id;
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6));
+            }
+        } catch (SQLException e) {
+        }
+        return p;
+    }
 
 }
