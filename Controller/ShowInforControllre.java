@@ -39,10 +39,18 @@ public class ShowInforControl extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DAO dao = new DAO();
+            
+            //get id when cick to product with getparamenter by name.
+            // after get paramenter , we parseInt
             int id = Integer.parseInt(request.getParameter("id"));
+            
+            //Find product by it ID
             Product p = dao.getProductById(id);
+            
+            // get All Category in Database
             List<Category> listCategory = dao.getAllCategory();
             
+            //setAttribute and go ShowInfor.jsp
             request.setAttribute("p", p);
             request.setAttribute("listC", listCategory);
             
