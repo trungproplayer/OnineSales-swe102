@@ -24,14 +24,19 @@ public class SignupControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        //getParament by name in the Signup.jsp
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
         String repass = request.getParameter("repassword");
+       
         String mess = "";
+        //Check is re-password
         if (!pass.equals(repass)) {
             mess = "Re-password is not equal to password...";
         } else {
             DAO dao = new DAO();
+            
+            //Check is check user is Exsit or not
             Account a = dao.checkAccount(user);
             if (a != null) {
                 mess = "User is existing!!!";
@@ -40,6 +45,7 @@ public class SignupControl extends HttpServlet {
                 dao.signup(user, pass);
             }
         }
+        //setAttribute and go to Signup.jsp
         request.setAttribute("mess", mess);
         request.getRequestDispatcher("Signup.jsp").forward(request, response);
     }
